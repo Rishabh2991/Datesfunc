@@ -1,0 +1,80 @@
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.util.Locale;
+import java.util.* ;
+
+public class Main {
+    public static void main(String[] args) 
+	{	//Scanner key= new Scanner(System.in)
+	    //System.out.println("Enter FROM DATE(YYYY-MM-DD)");
+        //String date1 = key.nextLine();       //
+		//System.out.println("Enter TO DATE(YYYY-MM-DD)");
+        //String date2 = key.nextLine();       //
+        String date1="2015-05-01";
+        String date2="2017-01-10";
+        
+        DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar beginCalendar = Calendar.getInstance();
+        Calendar finishCalendar = Calendar.getInstance();
+
+        try {
+            beginCalendar.setTime(formater.parse(date1));
+            finishCalendar.setTime(formater.parse(date2));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        while (beginCalendar.before(finishCalendar)) {
+            // add one month to date per loop
+            String date =     formater.format(beginCalendar.getTime()).toUpperCase();
+            String to_date =     formater.format(finishCalendar.getTime()).toUpperCase();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd",Locale.ENGLISH);
+            DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("MMM yy",Locale.ENGLISH);
+            DateTimeFormatter dtf3 = DateTimeFormatter.ofPattern("MMM",Locale.ENGLISH);
+            DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("yy",Locale.ENGLISH);
+            LocalDate ld = LocalDate.parse(date, dtf);
+            LocalDate ld2 = LocalDate.parse(to_date, dtf);
+            String month_name = dtf3.format(ld);
+            String month = dtf2.format(ld);
+            String month2 = dtf2.format(ld2);
+            
+            
+            String s1 = "Mar";
+            String s2 = "Jun";
+            String s3 = "Sep";
+            String s4 = "Dec";
+            
+            if ((month_name.compareTo(s1) == 0) || (month_name.compareTo(s2) == 0) || (month_name.compareTo(s3) == 0) || (month_name.compareTo(s4) == 0)) {
+             
+                System.out.println(month);
+            } 
+             
+            beginCalendar.add(Calendar.MONTH, 1);
+        } 
+        
+        String to_date =     formater.format(finishCalendar.getTime()).toUpperCase();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd",Locale.ENGLISH);
+        DateTimeFormatter dtf3 = DateTimeFormatter.ofPattern("MMM",Locale.ENGLISH);
+        DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("yy",Locale.ENGLISH);
+        LocalDate ld2 = LocalDate.parse(to_date, dtf);
+        String to_month = dtf3.format(ld2);
+        String year = dtf4.format(ld2);
+        
+        if ((to_month.compareTo("Jan") == 0) || (to_month.compareTo("Feb") == 0)){
+          System.out.println("Mar "+ year);}
+          
+        if ((to_month.compareTo("Apr") == 0) || (to_month.compareTo("May") == 0)){
+          System.out.println("Jun "+ year);} 
+        
+        if ((to_month.compareTo("Jul") == 0) || (to_month.compareTo("Aug") == 0)){
+          System.out.println("Sep "+ year);}
+        
+        if ((to_month.compareTo("Oct") == 0) || (to_month.compareTo("Nov") == 0)){
+          System.out.println("Dec "+ year);}    
+    }
+}
